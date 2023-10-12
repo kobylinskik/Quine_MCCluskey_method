@@ -1,0 +1,41 @@
+TARGET = quine
+
+CC = g++
+
+INPUT = mathFun.cpp
+
+TEST_CCFLAGS += -I.
+TEST_CCFLAGS += -I./test/
+TEST_CCFLAGS += -I./Unity/src/
+TEST_CCFLAGS += -g
+
+UNITY = ./Unity/src/unity.c
+
+MATH_FUN_TEST_INPUT = mathFun.cpp
+MATH_FUN_TEST_INPUT += test/mathFunTest.cpp
+MATH_FUN_TEST_INPUT += $(UNITY)
+
+MATH_FUN_TEST_TARGET = mathFunTest
+
+IMPLICANT_TEST_INPUT = Implicant.cpp
+IMPLICANT_TEST_INPUT += mathFun.cpp
+IMPLICANT_TEST_INPUT += test/ImplicantTest.cpp
+IMPLICANT_TEST_INPUT += $(UNITY)
+
+IMPLICANT_TEST_TARGET = ImplicantTest
+
+main:
+	$(CC) $(INPUT) $(TARGET)
+
+clean:
+	rm $(TARGET)
+
+testMathFun:
+	$(CC) $(TEST_CCFLAGS) $(MATH_FUN_TEST_INPUT) -o $(MATH_FUN_TEST_TARGET)
+	./$(MATH_FUN_TEST_TARGET)
+	rm $(MATH_FUN_TEST_TARGET)
+
+testImplicant:
+	$(CC) $(TEST_CCFLAGS) $(IMPLICANT_TEST_INPUT) -o $(IMPLICANT_TEST_TARGET)
+	./$(IMPLICANT_TEST_TARGET)
+	rm $(IMPLICANT_TEST_TARGET)
